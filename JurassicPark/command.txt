@@ -90,5 +90,22 @@
     - Change Text tab to JSON
     - Paste/type object literal
 
+14. Add the data:
+  protected override void OnModelCreating(ModelBuilder builder)
+  {
+    builder.Entity<Animal>()
+        .HasData(
+            new Animal { AnimalId = 1, Name = "Matilda", Species = "Dinosaur", Age = 7, Gender = "Female" },
+            new Animal { AnimalId = 2, Name = "Rexie", Species = "Dinosaur", Age = 10, Gender = "Female" },
+            new Animal { AnimalId = 3, Name = "Trey Ceratops", Species = "Dinosaur", Age = 2, Gender = "Female" },
+            new Animal { AnimalId = 4, Name = "Pip", Species = "Dinosaur", Age = 4, Gender = "Male" },
+            new Animal { AnimalId = 5, Name = "Bartholomew", Species = "Dinosaur", Age = 22, Gender = "Male" }
+        );
+  }
+
+15. Run: 
+  dotnet ef migrations add SeedData
+  dotnet ef database update
+
 
 

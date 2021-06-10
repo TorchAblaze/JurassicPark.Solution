@@ -18,9 +18,26 @@ namespace JurassicPark.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Dinosaur>>> Get()
+    public ActionResult<IEnumerable<Dinosaur>> Get(string species, string gender, string name)
     {
-      return await _db.Dinosaurs.ToListAsync();
+      var query = _db.Dinosaurs.AsQueryable();
+
+      if (species != null)
+      {
+        query = query.Where(entry => entry.Species == species);
+      }
+      
+      if (gender != null)
+      {
+        query = query.Where(entry => entry.Gender == gender);
+      }
+
+      if (name != null)
+      {
+        query = query.Where(entry => entry.Name == name);
+      }
+
+      return query.ToList();
     }
 
     [HttpGet("{id}")]
