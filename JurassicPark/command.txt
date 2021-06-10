@@ -4,7 +4,7 @@
     app.UseHttpsRedirection(); (line 47?)
 
 3. Change appsettings.Development.json to: 
-    appsettings.Development.json
+    Where: appsettings.Development.json
       {
         "Logging": {
           "LogLevel": {
@@ -16,7 +16,7 @@
       }
 
 4. Update the launch URL: 
-  Properties\launchSettings.json
+  Where: Properties\launchSettings.json
   "launchUrl": "api/Dinosaurs",
 
 5. Add Packages: 
@@ -26,6 +26,7 @@
 6. Create Models folder and classes
 
 7. Create a DbContext class in a file called JurassicParkContext.cs:
+
   using Microsoft.EntityFrameworkCore;
 
   namespace JurassicPark.Models
@@ -90,7 +91,7 @@
     - Change Text tab to JSON
     - Paste/type object literal
 
-14. Add the data:
+14. Add the data in JurassicParkContext.cs:
   protected override void OnModelCreating(ModelBuilder builder)
   {
     builder.Entity<Animal>()
