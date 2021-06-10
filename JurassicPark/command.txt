@@ -1,0 +1,94 @@
+1. Ran this in JurassicPark directory: dotnet new webapi --framework net5.0
+
+2. In the Startup.cs file, find and comment out the following line:
+    app.UseHttpsRedirection(); (line 47?)
+
+3. Change appsettings.Development.json to: 
+    appsettings.Development.json
+      {
+        "Logging": {
+          "LogLevel": {
+            "Default": "Debug",
+            "System": "Information",
+            "Microsoft": "Information"
+          }
+        }
+      }
+
+4. Update the launch URL: 
+  Properties\launchSettings.json
+  "launchUrl": "api/Dinosaurs",
+
+5. Add Packages: 
+  dotnet add package Microsoft.EntityFrameworkCore -v 5.0.0
+  dotnet add package Pomelo.EntityFrameworkCore.MySql -v 5.0.0-alpha.2
+
+6. Create Models folder and classes
+
+7. Create a DbContext class in a file called JurassicParkContext.cs:
+  using Microsoft.EntityFrameworkCore;
+
+  namespace JurassicPark.Models
+  {
+      public class JurassicParkContext : DbContext
+      {
+          public JurassicParkContext(DbContextOptions<JurassicParkContext> options)
+              : base(options)
+          {
+          }
+
+          public DbSet<Dinosaur> Dinosaurs { get; set; }
+      }
+  }
+
+8. Edit our ConfigureServices method in Startup.cs:
+    - Change using statements
+    - Change:
+    public void ConfigureServices(IServiceCollection services)
+        {
+
+            services.AddDbContext<JurassicParkContext>(opt =>
+                opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
+            services.AddControllers();
+        }
+    -  Change:
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+9. Update appsettings.json:
+  JurassicPark/appsettings.json
+  {
+    "Logging": {
+      "LogLevel": {
+        "Default": "Warning",
+        "System": "Information",
+        "Microsoft": "Information"
+      }
+    },
+    "AllowedHosts": "*",
+    "ConnectionStrings": {
+      "DefaultConnection": "Server=localhost;Port=3306;database=jurassic_park;uid=root;pwd=[YOUR-PASSWORD-HERE];"
+    }
+  }
+
+10. dotnet add package Microsoft.EntityFrameworkCore.Design -v 5.0.0
+    dotnet ef migrations add Initial
+    dotnet ef database update
+
+11. Delete WeatherForecastController.cs
+
+12. Create DinosaursController.cs and add code
+
+13. Pass an object literal in the body of our API call in Postman:
+    - Make sure it's set to Postman
+    - Go to Body tab
+    - Click "raw" radio button
+    - Change Text tab to JSON
+    - Paste/type object literal
+
+
+
